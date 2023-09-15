@@ -1,10 +1,29 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/Auth";
 
 const Home = () => {
+  const [auth] = useContext(AuthContext);
+
   return (
     <div>
-      <Link to={"/login"}> Login</Link>
+      {JSON.stringify(auth?.user?.role)}
+      {!auth?.user && <Link to={"/login"}> Login</Link>}
+
+      <br />
+      {auth && auth?.user && auth?.user?.role === "admin" && (
+        <Link to={"/admin"}>Admin Dasboard</Link>
+      )}
+
+      {auth && auth?.user && auth?.user?.role === "agent" && (
+        <Link>Admin Dasboard</Link>
+      )}
+      {auth && auth?.user && auth?.user?.role === "client" && (
+        <Link>Admin Dasboard</Link>
+      )}
+      {auth && auth?.user && auth?.user?.role === "manager" && (
+        <Link>Admin Dasboard</Link>
+      )}
     </div>
   );
 };
