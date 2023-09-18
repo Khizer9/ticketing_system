@@ -11,25 +11,27 @@ import Redirect from "../../../utils/Redirect";
 const { Content, Header, Sider } = Layout;
 const { useBreakpoint } = Grid;
 
-const AdminLayout = ({ children }) => {
+const AgentLayout = ({ children }) => {
   const breakpoint = useBreakpoint();
   const [open, setOpen] = useState(false);
   const [auth, setAuth] = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const router = useNavigate();
+
   const onClose = () => {
     setOpen(false);
   };
 
   useEffect(() => {
     if (auth && auth?.token) {
-      getCurrentAdmin();
+      getCurrentClient();
     }
   }, []);
 
-  const getCurrentAdmin = async () => {
+  const getCurrentClient = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:9000/api/by/auth/current-admin`,
+      const { data } = await axios.get(
+        `http://localhost:9000/api/current-admin`,
         {
           headers: {
             Authorization: `Bearer ${auth?.token}`,
@@ -45,6 +47,8 @@ const AdminLayout = ({ children }) => {
       router("/");
     }
   };
+
+
 
   return (
     <Layout>
@@ -104,4 +108,4 @@ const AdminLayout = ({ children }) => {
   );
 };
 
-export default AdminLayout;
+export default AgentLayout;

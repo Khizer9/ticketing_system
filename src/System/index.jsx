@@ -12,17 +12,17 @@ const Home = () => {
 
       <br />
       {auth && auth?.user && auth?.user?.role === "admin" && (
-        <Link to={"/admin"}>Admin Dasboard</Link>
+        <Link to="/admin">Admin Dasboard</Link>
       )}
 
       {auth && auth?.user && auth?.user?.role === "agent" && (
-        <Link>Admin Dasboard</Link>
+        <Link to='/agent'>Agent Dasboard</Link>
       )}
       {auth && auth?.user && auth?.user?.role === "client" && (
-        <Link>Admin Dasboard</Link>
+        <Link to='/client'>Client Dasboard</Link>
       )}
       {auth && auth?.user && auth?.user?.role === "manager" && (
-        <Link>Admin Dasboard</Link>
+        <Link>Manager Dasboard</Link>
       )}
     </div>
   );
