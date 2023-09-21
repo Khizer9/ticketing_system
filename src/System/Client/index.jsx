@@ -1,8 +1,8 @@
 import React from "react";
-import AdminLayout from "./components/ClientLayout";
+import ClientLayout from "./components/ClientLayout";
 
 const Client = () => {
-  return <h1>hello from client</h1>
+  return <ClientLayout>hello from client</ClientLayout>
 };
 
 export default Client;

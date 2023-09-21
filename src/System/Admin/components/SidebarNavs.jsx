@@ -1,38 +1,36 @@
 import { Menu } from "antd";
 import React from "react";
+import { MdOutlineDashboard } from "react-icons/md";
+import { PiUsersLight } from "react-icons/pi";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import bg from "../../../assets/bg.jpeg";
+const SideNavs = () => {
+  const router = useNavigate();
+  const pathname = useLocation().pathname;
 
-import { BiHome } from "react-icons/bi";
-
-const SidebarNavs = () => {
   return (
     <Menu
+      theme="dark"
       style={{
-        background: `url(${bg})`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        height: "100%",
+        backgroundColor: "transparent",
       }}
+      defaultSelectedKeys={["1"]}
+      mode="inline"
     >
-      <div
-        className="mt-4 mb-4 text-center p-2"
-        style={{ borderRadius: "5px", backgroundColor: "#21375b66" }}
-      >
-        <h5 className="text-light" style={{ color: "#bb8c00 !important" }}>
-          Ticketing System
-        </h5>
-      </div>
-      <Menu.Item
-        className="sidebar-navs "
-        icon={<BiHome />}
-        style={{ color: "#c49507 ", backgroundColor: "transparent" }}
-      >
-        Home
+      <Menu.Item onClick={()=>router('/admin')} className={`${pathname === "/admin" ? 'sidebar-navs-active' : 'sidebar-navs'}`} icon={<MdOutlineDashboard />}>
+        Dashboard
       </Menu.Item>
+      <Menu.Item
+        onClick={() => router("/admin/all-users")}
+        className={`${pathname === "/admin/all-users" ? 'sidebar-navs-active' : 'sidebar-navs'}`}
+        icon={<PiUsersLight />}
+      >
+        All Users
+      </Menu.Item>
+      <Menu.Item className={`${pathname === "" ? 'sidebar-navs-active' : 'sidebar-navs'}`}>Agents</Menu.Item>
+      <Menu.Item className={`${pathname === "" ? 'sidebar-navs-active' : 'sidebar-navs'}`}>Clients</Menu.Item>
     </Menu>
   );
 };
 
-export default SidebarNavs;
+export default SideNavs;

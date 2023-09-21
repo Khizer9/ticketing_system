@@ -1,3 +1,37 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
 .sidebar-navs:hover {
-  color: #584304 !important;
+  color: #00a2ff !important;
+  background-color: rgba(255, 255, 255, 0.11) !important;
+}
+
+.sidebar-navs-active {
+  color: #00a2ff !important;
+  background-color: rgba(255, 255, 255, 0.263) !important;
+}
+
+.icon-header {
+  color: #0b3d91 !important;
+}
+
+.ant-drawer-header-title{
+  color: white !important;
+}
+
+.avatar-profile {
+  background: linear-gradient(45deg, #0b3d91, #000000) !important;
+  color: white !important;
+  justify-content: end;
+}
+
+.icon-header {
+  color: #0b3d91 !important;
+}
+
+:where(.css-dev-only-do-not-override-18iikkb).ant-drawer .ant-drawer-close {
+  color: #ffffff !important;
+  
 }

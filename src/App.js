@@ -7,6 +7,7 @@ import Admin from "./System/Admin";
 import Client from "./System/Client";
 import Agent from "./System/Agent";
 import PrivateRoute from "./System/PrivateRoute";
+import AllUsers from "./System/Admin/AllUsers";
 // import Check from "./Check";
 
 const App = () => {
@@ -22,10 +23,8 @@ const App = () => {
         {/* Admin Routes */}
       <Route exact path='/' element={<PrivateRoute/>}>
             <Route exact path='/admin' element={<Admin/>}/>
+            <Route exact path='/admin/all-users' element={<AllUsers/>}/>
       </Route>
-        {/* <PrivateRoute exact path='/admin' element={<Admin />}/> */}
-        {/* <Route path="/admin" element={<Admin />} /> */}
-        {/* <Route path="/check" element={<Check />} /> */}
 
         {/* Client Routes */}
         <Route path="/client" element={<Client />} />
