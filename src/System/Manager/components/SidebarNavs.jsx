@@ -1,8 +1,10 @@
 import { Menu } from "antd";
 import React from "react";
 import { MdOutlineDashboard } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const SideNavs = () => {
+  const router = useNavigate();
   return (
     <Menu
       theme="dark"
@@ -14,6 +16,13 @@ const SideNavs = () => {
     >
       <Menu.Item className="sidebar-navs" icon={<MdOutlineDashboard />}>
         Dashboard
+      </Menu.Item>
+      <Menu.Item
+        onClick={() => router("/manager/all-users")}
+        className="sidebar-navs"
+        // icon={<PiUsersLight />}
+      >
+        All Users
       </Menu.Item>
       <Menu.Item className="sidebar-navs">Managers</Menu.Item>
       <Menu.Item className="sidebar-navs">Agents</Menu.Item>

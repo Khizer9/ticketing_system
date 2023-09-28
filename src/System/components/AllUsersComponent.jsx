@@ -23,7 +23,7 @@ const AllUsersComponent = ({ heading, url }) => {
           Authorization: `Bearer ${auth?.token}`,
         },
       });
-
+      console.log(data, 'AllUserCOmponent')
       setUsers(data);
       setLoading(false);
     } catch (error) {

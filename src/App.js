@@ -13,6 +13,8 @@ import AllManager from "./System/Admin/AllManagers";
 import AllAdmins from "./System/Admin/AllAdmins";
 import Category from "./System/Admin/Category";
 import CreateAccount from "./System/Admin/CreateAccount";
+import Manager from "./System/Manager";
+import AllUsersManager from "./System/Manager/AllUsersManager";
 // import Check from "./Check";
 
 const App = () => {
@@ -42,6 +44,10 @@ const App = () => {
 
         {/* Agent Routes */}
         <Route path="/agent" element={<Agent />} />
+
+        {/* Manager Routes */}
+        <Route path="/manager" element={<Manager />} />
+        <Route path="/manager/all-users" element={<AllUsersManager />} />
         
       </Routes>
     </>

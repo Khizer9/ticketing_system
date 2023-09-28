@@ -2,8 +2,7 @@ import { Menu } from "antd";
 import React from "react";
 
 import bg from "../../../assets/bg.jpeg";
-
-import { BiHome } from "react-icons/bi";
+import { MdOutlineDashboard } from "react-icons/md";
 
 const SidebarNavs = () => {
   return (
@@ -20,17 +19,16 @@ const SidebarNavs = () => {
         className="mt-4 mb-4 text-center p-2"
         style={{ borderRadius: "5px", backgroundColor: "#21375b66" }}
       >
-        <h5 className="text-light" style={{ color: "#bb8c00 !important" }}>
+        <h5 className="text-light" style={{ color: 'white',fontSize: '18px',textAlign: 'center',marginTop: '50px' }}>
           Ticketing System
         </h5>
       </div>
-      <Menu.Item
-        className="sidebar-navs "
-        icon={<BiHome />}
-        style={{ color: "#c49507 ", backgroundColor: "transparent" }}
-      >
-        Home
+      <Menu.Item className="sidebar-navs" icon={<MdOutlineDashboard />}>
+        Dashboard
       </Menu.Item>
+      <Menu.Item className="sidebar-navs">Managers</Menu.Item>
+      <Menu.Item className="sidebar-navs">Agents</Menu.Item>
+      <Menu.Item className="sidebar-navs">Clients</Menu.Item>
     </Menu>
   );
 };

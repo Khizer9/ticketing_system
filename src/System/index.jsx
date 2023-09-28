@@ -22,7 +22,7 @@ const Home = () => {
         <Link to='/client'>Client Dasboard</Link>
       )}
       {auth && auth?.user && auth?.user?.role === "manager" && (
-        <Link>Manager Dasboard</Link>
+        <Link to='/manager'>Manager Dasboard</Link>
       )}
     </div>
   );

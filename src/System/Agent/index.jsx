@@ -1,8 +1,11 @@
 import React from "react";
-import AdminLayout from "./components/AgentLayout";
+import AgentLayout from "./components/AgentLayout";
+import SidebarNavs from "./components/SidebarNavs";
 
 const Agent = () => {
-  return <h1>hello from Agent</h1>
+  return <AgentLayout>
+    Agent
+  </AgentLayout>
 };
 
 export default Agent;

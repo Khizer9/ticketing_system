@@ -15,7 +15,7 @@ import UpdateProfileComponent from "../../components/UpdateProfileComponent";
 const { Content, Header, Sider } = Layout;
 const { useBreakpoint } = Grid;
 
-const AdminLayout = ({ children }) => {
+const ManagerLayout = ({ children }) => {
   const breakpoints = useBreakpoint();
   const [open, setOpen] = useState(false);
   const [auth, setAuth] = useContext(AuthContext);
@@ -34,7 +34,7 @@ const AdminLayout = ({ children }) => {
 
   const getCurrentAdmin = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:9000/api/current-admin`,
+      const { data } = await axios.get(`http://localhost:9000/api/current-manager`,
         {
           headers: {
             Authorization: `Bearer ${auth?.token}`,
@@ -151,4 +151,4 @@ const AdminLayout = ({ children }) => {
   );
 };
 
-export default AdminLayout;
+export default ManagerLayout;
