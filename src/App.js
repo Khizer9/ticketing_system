@@ -8,6 +8,11 @@ import Client from "./System/Client";
 import Agent from "./System/Agent";
 import PrivateRoute from "./System/PrivateRoute";
 import AllUsers from "./System/Admin/AllUsers";
+import AllAgent from "./System/Admin/AllAgent";
+import AllManager from "./System/Admin/AllManagers";
+import AllAdmins from "./System/Admin/AllAdmins";
+import Category from "./System/Admin/Category";
+import CreateAccount from "./System/Admin/CreateAccount";
 // import Check from "./Check";
 
 const App = () => {
@@ -24,6 +29,12 @@ const App = () => {
       <Route exact path='/' element={<PrivateRoute/>}>
             <Route exact path='/admin' element={<Admin/>}/>
             <Route exact path='/admin/all-users' element={<AllUsers/>}/>
+            <Route exact path='/admin/all-agents' element={<AllAgent/>}/>
+            <Route exact path='/admin/all-managers' element={<AllManager/>}/>
+            <Route exact path='/admin/all-admins' element={<AllAdmins/>}/>
+            <Route exact path='/admin/category' element={<Category/>}/>
+            <Route exact path='/admin/create-account' element={<CreateAccount/>}/>
+
       </Route>
 
         {/* Client Routes */}

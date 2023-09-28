@@ -2,12 +2,12 @@ import React from 'react'
 import AdminLayout from './components/AdminLayout'
 import AllUsersComponent from '../components/AllUsersComponent'
 
-const AllUsers = () => {
+const AllAdmins = () => {
   return (
     <AdminLayout>
-        <AllUsersComponent heading={"All Clients"} url={"/all-client"}/>
+        <AllUsersComponent heading={'All Admins'} url={'/all-admin'}/>
     </AdminLayout>
   )
 }
 
-export default AllUsers
+export default AllAdmins

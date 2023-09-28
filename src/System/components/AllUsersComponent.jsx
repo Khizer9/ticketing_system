@@ -1,42 +1,59 @@
-import { Avatar, Card, List, Modal } from 'antd';
-import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from "react";
+import { Avatar, Card, List, Modal } from "antd";
 import { AuthContext } from "../../context/Auth";
-import toast from 'react-hot-toast';
-import axios from 'axios';
+import toast from "react-hot-toast";
+import axios from "axios";
+import UsersBtns from "./UsersBtn";
+import { deleteRequest } from "../Actions/Requests";
 
-const AllUsersComponent = () => {
+const AllUsersComponent = ({ heading, url }) => {
+  const [auth] = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [currentItem, setCurrectItem] = useState({});
 
-    const [auth] = useContext(AuthContext)
-    const [modalOpen, setModalOpen] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const [currentItem, setCurrectItem] = useState(false)
-    const [users, setUsers] = useState([])
+  const [modalOpen, setModalOpen] = useState(false);
 
-    const gettingUsers = async () => {
-        try {
-            setLoading(true)
-            const { data } = await axios.get('http://localhost:9000/api/all-users', {
-                headers: {
-                    Authorization: `Bearer ${auth?.token}`,
-                }
-            })
-            setUsers(data)
-            setLoading(false)
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
-            toast.error('Failed, try again')
-        }
+  const gettingUsers = async () => {
+    try {
+      setLoading(true);
+
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${auth?.token}`,
+        },
+      });
+
+      setUsers(data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("Failed, try again");
     }
+  };
 
-    useEffect(() => {
-        gettingUsers()
-    }, [auth && auth.token])
+  useEffect(() => {
+    if (auth && auth?.token) gettingUsers();
+  }, [auth && auth?.token]);
+
+  const removeUser = async (_id) => {
+    let ok = window.confirm("Are you sure?");
+    if (ok) {
+      setLoading(true);
+      const data = await deleteRequest(`/by/auth/delete-users/${_id}`, auth);
+      if (data.ok) {
+        setUsers(users.filter((x) => x._id !== _id));
+        setLoading(false);
+        toast.success("Has been removed!");
+      }
+    }
+  };
 
   return (
     <>
-      <Card title={"All Users"}>
+      <Card title={heading}>
+        <UsersBtns />
         <List
           loading={loading}
           itemLayout="horizontal"
@@ -44,7 +61,7 @@ const AllUsersComponent = () => {
           renderItem={(item, index) => (
             <List.Item
               actions={[
-                <Link
+                <a
                   key="list-loadmore-edit"
                   onClick={() => {
                     setModalOpen(true);
@@ -52,7 +69,17 @@ const AllUsersComponent = () => {
                   }}
                 >
                   edit
-                </Link>,
+                </a>,
+                <span
+                  role="button"
+                  className="text-danger"
+                  key="list-loadmore-edit"
+                  onClick={() => {
+                    removeUser(item._id);
+                  }}
+                >
+                  delete
+                </span>,
               ]}
             >
               <List.Item.Meta
@@ -61,7 +88,7 @@ const AllUsersComponent = () => {
                     src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
                   />
                 }
-                title={item.name}
+                title={<a>{item.name}</a>}
                 description={item.role}
               />
             </List.Item>
@@ -82,7 +109,7 @@ const AllUsersComponent = () => {
         <p>some contents...</p>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default AllUsersComponent
+export default AllUsersComponent;
