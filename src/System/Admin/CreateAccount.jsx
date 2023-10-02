@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AdminLayout from "./components/AdminLayout";
 import { Button, Card, Input, Select } from "antd";
 import { IoCreate, IoHome, IoSendOutline } from "react-icons/io5";
 import Breadcrumbs from '../components/BreadCrumbs'
+import {PostRequest, getRequest} from '../Actions/Requests'
 
 import {
   LineChart,
@@ -13,6 +14,8 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import { AuthContext } from "../../context/Auth";
+import toast from "react-hot-toast";
 
 const data = [
   { name: "Mon", accounts: 3 },
@@ -42,9 +45,12 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
+
+
 const { Option } = Select;
 
 const CreateAccount = () => {
+  const [auth] = useContext(AuthContext)
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -54,21 +60,44 @@ const CreateAccount = () => {
     password2: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (name, value) => {
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const getCategoryId = async () => {
+    const data = await getRequest('all/categories', auth)
+    if(data){
+      console.log(data, 'categoryID')
+    }
+  }
+
+  useEffect(() => {
+    if(auth && auth.token){
+      getCategoryId()
+    }
+  }, [auth, auth.token])
+
+  const handleSubmit = async (e) => {
+    debugger
     e.preventDefault();
     if (formData.password !== formData.password2) {
       alert("Passwords do not match!");
       return;
     }
-    console.log("Form data submitted:", formData);
+
+    const data = await PostRequest('/register/a/user', formData, auth)
+    if(!data.error){
+      toast.success('Account created successfully!')
+      setFormData({ email: "",name: "",category: "",role: "",password: "",password2: ""})
+    }else {
+      toast.error('Invalid details')
+    }
+    
+    console.log("Form data submitted:", formData); 
+    console.log("data submitted:", data); 
   };
 
   const totalAccounts = data.reduce((acc, curr) => acc + curr.accounts, 0);
@@ -84,7 +113,7 @@ const CreateAccount = () => {
       />
       <Card
         className="cardStyle mt-3"
-        // style={{ background: "linear-gradient(45deg, #0b3c913a, #00000033)" }}
+        style={{ background: "linear-gradient(45deg, #0b3c913a, #00000033)" }}
       >
         <div className="row">
           <div className="col-md-6">
@@ -96,7 +125,7 @@ const CreateAccount = () => {
                 placeholder="example@hadiraza.com "
                 name="email"
                 value={formData.email}
-                onChange={handleChange}
+                onChange={(e) => handleChange("email", e.target.value)}
               />
             </div>
           </div>
@@ -109,7 +138,7 @@ const CreateAccount = () => {
                 placeholder="User's name"
                 name="name"
                 value={formData.name}
-                onChange={handleChange}
+                onChange={(e) => handleChange("name", e.target.value)}
               />
             </div>
           </div>
@@ -123,7 +152,7 @@ const CreateAccount = () => {
                 style={{ border: "none" }}
                 name="password"
                 value={formData.password}
-                onChange={handleChange}
+                onChange={(e) => handleChange("password", e.target.value)}
               />
             </div>
           </div>
@@ -135,7 +164,7 @@ const CreateAccount = () => {
                 style={{ border: "none" }}
                 name="password2"
                 value={formData.password2}
-                onChange={handleChange}
+                onChange={(e) => handleChange("password2", e.target.value)}
               />
             </div>
           </div>
@@ -149,17 +178,15 @@ const CreateAccount = () => {
               </label>
               <Select
                 required
-                // value={formData.role}
-                name="role"
-                onChange={handleChange}
+                value={formData.role}
+                onChange={(value) => handleChange("role", value)} // Pass the name and value
                 style={{ width: "100%" }}
-                // className="form-select"
               >
                 <Option value="">Choose</Option>
-                <option value="admin">Admin</option>
-                <option value="manager">Manager</option>
-                <option value="agent">Agent</option>
-                <option value="client">Client</option>
+                <Option value="admin">Admin</Option>
+                <Option value="manager">Manager</Option>
+                <Option value="agent">Agent</Option>
+                <Option value="client">Client</Option>
               </Select>
             </div>
           </div>
@@ -170,17 +197,15 @@ const CreateAccount = () => {
               </label>
               <Select
                 required
-                // value={formData.category}
-                name="role"
-                onChange={handleChange}
+                value={formData.category}
+                onChange={(value) => handleChange("category", value)} // Pass the name and value
                 style={{ width: "100%" }}
-                // className="form-select"
               >
                 <Option value="">Choose</Option>
-                <option value="admin">Admin</option>
-                <option value="manager">Manager</option>
-                <option value="agent">Agent</option>
-                <option value="client">Client</option>
+                <Option value="admin">Admin</Option>
+                <Option value="650c02d3f370f2afcc8e3ef5">Manager</Option>
+                <Option value="agent">Agent</Option>
+                <Option value="client">Client</Option>
               </Select>
             </div>
           </div>
