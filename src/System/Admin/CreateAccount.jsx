@@ -81,23 +81,27 @@ const CreateAccount = () => {
   }, [auth, auth.token])
 
   const handleSubmit = async (e) => {
-    debugger
-    e.preventDefault();
-    if (formData.password !== formData.password2) {
-      alert("Passwords do not match!");
-      return;
+    if(formData.name || formData.email || formData.password || formData.role || formData.category === ''){
+      toast.error('Please fill manadatory fields')
+    }else{
+      e.preventDefault();
+      if (formData.password !== formData.password2) {
+        alert("Passwords do not match!");
+        return;
+      }
+  
+      const data = await PostRequest('/register/a/user', formData, auth)
+      if(data){
+        toast.success('Account created successfully!')
+        setFormData({ email: "",name: "",category: "",role: "",password: "",password2: ""})
+      }else {
+        toast.error('Invalid details')
+      }
+      
+      console.log("Form data submitted:", formData); 
+      console.log("data submitted:", data);
     }
-
-    const data = await PostRequest('/register/a/user', formData, auth)
-    if(!data.error){
-      toast.success('Account created successfully!')
-      setFormData({ email: "",name: "",category: "",role: "",password: "",password2: ""})
-    }else {
-      toast.error('Invalid details')
-    }
-    
-    console.log("Form data submitted:", formData); 
-    console.log("data submitted:", data); 
+     
   };
 
   const totalAccounts = data.reduce((acc, curr) => acc + curr.accounts, 0);
@@ -202,10 +206,10 @@ const CreateAccount = () => {
                 style={{ width: "100%" }}
               >
                 <Option value="">Choose</Option>
-                <Option value="admin">Admin</Option>
+                <Option value="650179a52db1ff5e502e89e4">Admin</Option>
                 <Option value="650c02d3f370f2afcc8e3ef5">Manager</Option>
-                <Option value="agent">Agent</Option>
-                <Option value="client">Client</Option>
+                <Option value="650c02d3f370f2afcc8e3ef5">Agent</Option>
+                <Option value="650c02d3f370f2afcc8e3ef5">Client</Option>
               </Select>
             </div>
           </div>
